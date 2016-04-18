@@ -1,4 +1,27 @@
 Rails.application.routes.draw do
+  resources :users
+  resources :doctors
+  resources :patients do
+    resources :journals do
+      resources :comments
+    end
+  end
+
+
+  root 'welcome#index'
+  get '/dlogin' => 'doctor_sessions#new'
+  post '/dlogin' => 'doctor_sessions#create'
+  get '/dlogout' => 'doctor_sessions#destroy'
+  get '/plogin' => 'patient_sessions#new'
+  post '/plogin' => 'patient_sessions#create'
+  get '/plogout' => 'patient_sessions#destroy'
+  get '/patients/:id/adddoc' => 'patients#adddoc'
+  get '/patients/:id/adddoctor' => 'patients#adddoctor'
+  get '/add_entry' => 'journals#new'
+  get '/deletec' => 'comments#destroy'
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

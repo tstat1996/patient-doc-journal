@@ -1,0 +1,26 @@
+<%= form_for([@patient, @journal]) do |f| %>
+  <% if @journal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@journal.errors.count, "error") %> prohibited this journal from being saved:</h2>
+
+      <ul>
+      <% @journal.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :body %><br>
+    <%= f.text_field :body %>
+    <!--%= hidden_field_tag :patient_id %!-->
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

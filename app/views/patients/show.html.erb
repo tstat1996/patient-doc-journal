@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+<% if patient_logged_in? %>
+  <a class="banner">Hi <%= current_patient.name %></a> 
+<% end %>
+<p>
+  <strong>Name:</strong>
+  <%= @patient.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @patient.email %>
+</p>
+
+<p>
+  <strong>Password hash:</strong>
+  <%= @patient.password_hash %>
+</p>
+
+<p>
+  <strong>Doctors:</strong>
+  <% @patient.doctors.each do |doc| %>
+    <%= doc.name %>
+    <% end %>
+</p>
+
+<strong>Entries:</strong>
+  <% @patient.journals.each do |entry| %>
+    <%= link_to "#{entry.name}", patient_journal_path(@patient.id, entry.id) %>
+    <%= entry.body %>
+  <% end %>
+</p>
+
+  <p>
+    <% if current_patient == @patient %>
+      <%= link_to 'Add doctor', "/patients/#{@patient.id}/adddoc" %><br>
+      <%= link_to 'Add Entry', new_patient_journal_path(@patient.id) %><br>
+    <% end %>
+
+    <!--%= link_to 'Doctors', '/doctors' %!-->
+  </p><br>
+
+<%= link_to 'Edit', edit_patient_path(@patient) %> |
+<%= link_to 'Back', patients_path if !doctor_logged_in? %>
+<%= link_to 'Back', doctors_path if doctor_logged_in? %>
+
+

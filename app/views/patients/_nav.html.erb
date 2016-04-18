@@ -1,0 +1,12 @@
+<nav class="nav-banner">
+
+<% if !patient_logged_in? %>
+  	<a class="nav-btn" href="/plogin">Log in</a>
+  	<a class="nav-btn" href="/patients/new">Sign up</a>
+  <% else %>
+  	<%= link_to "#{current_patient.name}", current_patient %>
+  	<%= link_to 'Log out', '/plogout', method: :delete %>
+  <% end %>
+
+    </span>
+</nav>

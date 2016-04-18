@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @journal.name %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @journal.body %>
+</p>
+
+<% if !@journal.comments.empty? %>
+  <h4>Comments on <%= @journal.name %></h4>
+    <table class="table">
+      <tr>
+        <th>Content</th>
+        <th>Action</th>
+      </tr>
+      <% @journal.comments.each do |comment| %>
+      <tr>
+        <td>
+        <a style='display:inline-block'> - <%= comment.content %></a>
+      </td>
+      <td>
+        <form style='display:inline-block' action="/journals/<%= @journal.id %>/journals/<%= comment.id %>/edit" method="get">
+          <input type="submit" value="Edit" />
+        </form>
+        <form style='display:inline-block' action="/journals/<%= @journal.id %>/comments/<%= comment.id %>" method="post">
+          <input type="hidden" name="_method" value="delete" />
+          <input type="submit" id="comment<%= comment.id %>" value="Delete" />
+        </form>
+        <td><%= link_to "delete", '/deletec', :method  => :delete %></td>
+      </td>
+      </tr>
+    <% end %>
+    </table>
+<% else %>
+  <%= 'No comments' %>
+<% end %>
+
+<% if doctor_logged_in? %>
+  <%= link_to 'Add comment', new_patient_journal_comment_path(@journal.patient, @journal) %> |
+<% end %>
+
+<% if patient_logged_in? %>
+  <%= link_to 'Edit', edit_patient_journal_path(@journal.patient, @journal) %> |
+<% end %>
+<p>
+<%= link_to 'Back', "/patients/#{@journal.patient.id}" %>
