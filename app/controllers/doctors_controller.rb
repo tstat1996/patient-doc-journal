@@ -7,6 +7,11 @@ class DoctorsController < ApplicationController
     @doctors = Doctor.all
   end
 
+  def patients
+    binding.pry
+    @patients = @doctor.patients.all
+  end
+
   # GET /doctors/1
   # GET /doctors/1.json
   def show
@@ -25,6 +30,7 @@ class DoctorsController < ApplicationController
   # POST /doctors.json
   def create
     @doctor = Doctor.new(doctor_params)
+    @doctor.password = doctor_params[:password]
 
     respond_to do |format|
       if @doctor.save
@@ -72,6 +78,6 @@ class DoctorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def doctor_params
-      params.require(:doctor).permit(:name, :email, :password_hash)
+      params.require(:doctor).permit(:name, :email, :password)
     end
 end

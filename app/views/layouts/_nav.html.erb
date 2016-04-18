@@ -1,9 +1,10 @@
 <nav class="nav-banner">
-  <a class="nav-btn" href="/">Home</a>
-  <a class="nav-btn" href="/doctors">Doctors</a>
-  <a class="nav-btn" href="/patients">Patients</a>
+  <!--a class="nav-btn" href="/">Home</a!-->
+  <!--a class="nav-btn" href="/doctors">Doctors</a>
+  <a class="nav-btn" href="/patients">Patients</a!-->
   <% if doctor_logged_in? %>
     <%= link_to "#{current_doctor.name}", current_doctor %>
+    <%= link_to 'Patients', doctor_patients_path(current_doctor) %>
   	<%= link_to 'Log out', '/dlogout', method: :delete %>
   <% elsif patient_logged_in? %>
     <%= link_to "#{current_patient.name}", current_patient %>

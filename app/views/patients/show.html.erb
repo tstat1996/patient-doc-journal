@@ -3,6 +3,7 @@
   <a class="banner">Hi <%= current_patient.name %></a> 
 <% end %>
 <p>
+
   <strong>Name:</strong>
   <%= @patient.name %>
 </p>
@@ -28,12 +29,14 @@
   <% @patient.journals.each do |entry| %>
     <%= link_to "#{entry.name}", patient_journal_path(@patient.id, entry.id) %>
     <%= entry.body %>
+    <%= link_to 'delete', patient_journal_path(@patient.id, entry.id), method: :delete %><br>
   <% end %>
 </p>
 
   <p>
     <% if current_patient == @patient %>
       <%= link_to 'Add doctor', "/patients/#{@patient.id}/adddoc" %><br>
+
       <%= link_to 'Add Entry', new_patient_journal_path(@patient.id) %><br>
     <% end %>
 

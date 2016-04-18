@@ -5,7 +5,7 @@ class PatientSessionsController < ApplicationController
   def create
     @patient = Patient.find_by(name: params[:name])
     if !@patient.nil? && @patient.password_hash == params[:password]
-      session[:patient_id] = @patient_id
+      session[:patient_id] = @patient.id
       redirect_to("/patients/#{@patient.id}")
     else
       redirect_to patients_login_path

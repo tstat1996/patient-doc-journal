@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+
+
 <p>
   <strong>Name:</strong>
   <%= @journal.name %>
@@ -22,16 +24,9 @@
         <td>
         <a style='display:inline-block'> - <%= comment.content %></a>
       </td>
-      <td>
-        <form style='display:inline-block' action="/journals/<%= @journal.id %>/journals/<%= comment.id %>/edit" method="get">
-          <input type="submit" value="Edit" />
-        </form>
-        <form style='display:inline-block' action="/journals/<%= @journal.id %>/comments/<%= comment.id %>" method="post">
-          <input type="hidden" name="_method" value="delete" />
-          <input type="submit" id="comment<%= comment.id %>" value="Delete" />
-        </form>
-        <td><%= link_to "delete", '/deletec', :method  => :delete %></td>
-      </td>
+        
+        <td><%= link_to "delete", patient_journal_comment_path(@journal.patient, @journal, comment), method: :delete, data: { confirm: "Yes" }  %></td>
+        <td><%= link_to "edit", edit_patient_journal_comment_path(@journal.patient, @journal, comment) %></td>
       </tr>
     <% end %>
     </table>

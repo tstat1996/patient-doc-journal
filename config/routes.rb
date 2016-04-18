@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get '/patients/:id/adddoctor' => 'patients#adddoctor'
   get '/add_entry' => 'journals#new'
   get '/deletec' => 'comments#destroy'
+  get 'doctor/patients' => 'doctors#patients'
 
 
 

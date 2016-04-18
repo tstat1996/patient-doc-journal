@@ -4,7 +4,7 @@ class DoctorSessionsController < ApplicationController
 
   def create
     @doctor = Doctor.find_by(name: params[:name])
-    if !@doctor.nil? && @doctor.password_hash == params[:password]
+    if !@doctor.nil? && @doctor.password == params[:password]
       session[:doctor_id] = @doctor.id
       redirect_to("/doctors/#{@doctor.id}")
     else
