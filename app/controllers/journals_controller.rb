@@ -1,3 +1,4 @@
+# Controller for journals
 class JournalsController < ApplicationController
   before_action :set_journal, only: [:show, :edit, :update, :destroy]
 
@@ -30,7 +31,7 @@ class JournalsController < ApplicationController
     respond_to do |format|
       if @journal.save
         @patient.add_entry(@journal)
-        format.html { redirect_to @patient, notice: 'Journal was successfully created.' }
+        format.html { redirect_to "/patients/#{@patient.id}/journals/#{@journal.id}", notice: 'Journal created.' }
         format.json { render :show, status: :created, location: @patient }
       else
         format.html { render :new }
@@ -44,7 +45,7 @@ class JournalsController < ApplicationController
   def update
     respond_to do |format|
       if @journal.update(journal_params)
-        format.html { redirect_to @journal, notice: 'Journal was successfully updated.' }
+        format.html { redirect_to @journal, notice: 'Journal updated.' }
         format.json { render :show, status: :ok, location: @journal }
       else
         format.html { render :edit }
@@ -56,21 +57,23 @@ class JournalsController < ApplicationController
   # DELETE /journals/1
   # DELETE /journals/1.json
   def destroy
+    @patient = Patient.find(params[:patient_id])
     @journal.destroy
     respond_to do |format|
-      format.html { redirect_to journals_url, notice: 'Journal was successfully destroyed.' }
+      format.html { redirect_to "/patients/#{@patient.id}/journals", notice: 'Journal destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_journal
-      @journal = Journal.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def journal_params
-      params.require(:journal).permit(:name, :body, :patient_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_journal
+    @journal = Journal.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def journal_params
+    params.require(:journal).permit(:name, :body, :patient_id)
+  end
 end

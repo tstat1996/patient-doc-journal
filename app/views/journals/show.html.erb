@@ -27,6 +27,8 @@
         
         <td><%= link_to "delete", patient_journal_comment_path(@journal.patient, @journal, comment), method: :delete, data: { confirm: "Yes" }  %></td>
         <td><%= link_to "edit", edit_patient_journal_comment_path(@journal.patient, @journal, comment) %></td>
+        <%= link_to "Delete Attachment", patient_journal_comment_path(@journal.patient.id, @journal.id, comment.id), :confirm => "Are you sure you want to delete this attachment?", :method => :delete %>
+
       </tr>
     <% end %>
     </table>

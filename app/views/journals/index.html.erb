@@ -18,7 +18,7 @@
         <td><%= journal.body %></td>
         <td><%= link_to 'Show', patient_journal_path(journal.patient, journal) %></td>
         <td><%= link_to 'Edit', edit_patient_journal_path(journal.patient, journal) %></td>
-        <td><%= link_to 'Destroy', patient_journal_path(journal.patient, journal), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', "/patients/#{journal.patient.id}/journals/#{journal.id}", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

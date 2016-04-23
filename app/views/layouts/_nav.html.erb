@@ -4,11 +4,15 @@
   <a class="nav-btn" href="/patients">Patients</a!-->
   <% if doctor_logged_in? %>
     <%= link_to "#{current_doctor.name}", current_doctor %>
-    <%= link_to 'Patients', doctor_patients_path(current_doctor) %>
+    <%= link_to 'Patients', "/doctors/#{current_doctor.id}/patients" %>
   	<%= link_to 'Log out', '/dlogout', method: :delete %>
   <% elsif patient_logged_in? %>
     <%= link_to "#{current_patient.name}", current_patient %>
+    <%= link_to 'Doctors', "/patients/#{current_patient.id}/doctors" %>
+    <%= link_to 'Journal', "/patients/#{current_patient.id}/journals" %>
     <%= link_to 'Log out', '/plogout', method: :delete %>
+  <% else %>
+    <%= link_to 'Home', root_path %>
   <% end %>
   <!-- Add link to user's show page and log out button if logged in -->
   <!-- Add log out link otherwise -->

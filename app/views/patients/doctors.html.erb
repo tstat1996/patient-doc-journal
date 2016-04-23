@@ -1,0 +1,23 @@
+<h1>Listing <%= current_patient.name %>'s Doctors</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @doctors.each do |doctor| %>
+      <tr>
+        <td><%= doctor.name %></td>
+        <td><%= doctor.email %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

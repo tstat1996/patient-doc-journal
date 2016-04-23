@@ -1,14 +1,15 @@
+# Controls sessions for patients
 class PatientSessionsController < ApplicationController
   def new
   end
 
   def create
-    @patient = Patient.find_by(name: params[:name])
-    if !@patient.nil? && @patient.password_hash == params[:password]
+    @patient = Patient.find_by(email: params[:email])
+    if !@patient.nil? && @patient.password == params[:password]
       session[:patient_id] = @patient.id
       redirect_to("/patients/#{@patient.id}")
     else
-      redirect_to patients_login_path
+      redirect_to '/plogin'
     end
   end
 

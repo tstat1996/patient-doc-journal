@@ -1,10 +1,10 @@
-<h1>Listing Patients</h1>
+<h1>Listing <%= current_doctor.name %>'s Patients</h1>
 
 <table>
   <thead>
     <tr>
       <th>Name</th>
-      <th>Email</th>
+      <th>Number of entries</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -13,6 +13,8 @@
     <% @patients.each do |patient| %>
       <tr>
         <td><%= link_to "#{patient.name}", patient %></td>
+        <td><%= patient.journals.size %></td>
+
       </tr>
     <% end %>
   </tbody>

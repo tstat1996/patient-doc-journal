@@ -1,5 +1,6 @@
+# Controller for doctors
 class DoctorsController < ApplicationController
-  before_action :set_doctor, only: [:show, :edit, :update, :destroy]
+  before_action :set_doctor, only: [:show, :edit, :update, :destroy, :patients]
 
   # GET /doctors
   # GET /doctors.json
@@ -8,7 +9,6 @@ class DoctorsController < ApplicationController
   end
 
   def patients
-    binding.pry
     @patients = @doctor.patients.all
   end
 
@@ -31,12 +31,10 @@ class DoctorsController < ApplicationController
   def create
     @doctor = Doctor.new(doctor_params)
     @doctor.password = doctor_params[:password]
-
     respond_to do |format|
       if @doctor.save
-      session[:doctor_id] = @doctor.id
-
-        format.html { redirect_to @doctor, notice: 'Doctor was successfully created.' }
+        session[:doctor_id] = @doctor.id
+        format.html { redirect_to @doctor, notice: 'Welcome new doctor' }
         format.json { render :show, status: :created, location: @doctor }
       else
         format.html { render :new }
@@ -50,7 +48,7 @@ class DoctorsController < ApplicationController
   def update
     respond_to do |format|
       if @doctor.update(doctor_params)
-        format.html { redirect_to @doctor, notice: 'Doctor was successfully updated.' }
+        format.html { redirect_to @doctor, notice: 'Doctor updated.' }
         format.json { render :show, status: :ok, location: @doctor }
       else
         format.html { render :edit }
@@ -62,7 +60,6 @@ class DoctorsController < ApplicationController
   # DELETE /doctors/1
   # DELETE /doctors/1.json
   def destroy
-    binding.pry
     @doctor.destroy
     respond_to do |format|
       format.html { redirect_to doctors_url, notice: 'Doctor was successfully destroyed.' }
@@ -71,13 +68,14 @@ class DoctorsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_doctor
-      @doctor = Doctor.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def doctor_params
-      params.require(:doctor).permit(:name, :email, :password)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_doctor
+    @doctor = Doctor.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def doctor_params
+    params.require(:doctor).permit(:name, :email, :password, :code)
+  end
 end

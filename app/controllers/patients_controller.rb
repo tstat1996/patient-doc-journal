@@ -1,10 +1,16 @@
+# Patient Controller
 class PatientsController < ApplicationController
-  before_action :set_patient, only: [:show, :edit, :update, :destroy, :adddoc]
+  before_action :set_patient, only: [:show, :edit, :update, :destroy, :adddoc, :doctors, :adddoctor]
 
   # GET /patients
   # GET /patients.json
   def index
     @patients = Patient.all
+  end
+
+  def doctors
+    flash.now[:alert] = 'Yes'
+    @doctors = @patient.doctors.all
   end
 
   # GET /patients/1
@@ -25,12 +31,11 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     @patient = Patient.new(patient_params)
-
+    @patient.password = patient_params[:password]
     respond_to do |format|
       if @patient.save
         session[:patient_id] = @patient.id
-
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
+        format.html { redirect_to @patient, notice: 'Welcome new patient.' }
         format.json { render :show, status: :created, location: @patient }
       else
         format.html { render :new }
@@ -44,8 +49,7 @@ class PatientsController < ApplicationController
   def update
     respond_to do |format|
       if @patient.update(patient_params)
-        @patient.add_doctor(params[:patient][:doctor_name])
-        format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
+        format.html { redirect_to @patient, notice: 'Patient updated.' }
         format.json { render :show, status: :ok, location: @patient }
       else
         format.html { render :edit }
@@ -59,36 +63,35 @@ class PatientsController < ApplicationController
   def destroy
     @patient.destroy
     respond_to do |format|
-      format.html { redirect_to patients_url, notice: 'Patient was successfully destroyed.' }
+      format.html { redirect_to patients_url, notice: 'Patient destroyed.' }
       format.json { head :no_content }
     end
   end
 
   def adddoc
-
   end
 
   def adddoctor
-@doctor = Doctor.find_or_initialize_by(name: params[:patient][:doctor_name])
     respond_to do |format|
-      if @patient.add_doctor(@doctor.name)
-        format.html { redirect_to @patient, notice: 'Doctor was successfully created.' }
+      if @patient.add_doctor(params[:patient][:doctor][:code])
+        format.html { redirect_to @patient, notice: 'Doctor added.' }
         format.json { render :show, status: :created, location: @patient }
       else
         format.html { render :adddoc }
         format.json { render json: @patient.errors, status: :unprocessable_entity }
-      end  
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_patient
-      @patient = Patient.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def patient_params
-      params.require(:patient).permit(:name, :email, :password_hash)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_patient
+    @patient = Patient.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def patient_params
+    params.require(:patient).permit(:name, :email, :password)
+  end
 end

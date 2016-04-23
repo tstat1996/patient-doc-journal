@@ -1,3 +1,4 @@
+# Patient model
 require 'bcrypt'
 
 class Patient < ActiveRecord::Base
@@ -11,10 +12,10 @@ class Patient < ActiveRecord::Base
   has_many :patients_doctors, dependent: :destroy
   has_many :doctors, through: :patients_doctors
   has_many :journals
+  accepts_nested_attributes_for :doctors
   accepts_nested_attributes_for :journals
   has_many :comments, through: :journals
   accepts_nested_attributes_for :comments
-
 
   def name_capital
     capital = name =~ /[A-Z]/
@@ -30,11 +31,12 @@ class Patient < ActiveRecord::Base
     self.password_hash = @password
   end
 
-  def add_doctor(doc_name)
-    doc = Doctor.find_by(name: doc_name)
+  def add_doctor(doc_code)
+    doc = Doctor.find_by(code: doc_code)
     return false if doc.nil?
+    return false if doctors.include?(doc)
     doc.patients << self
-    return true
+    true
   end
 
   def add_entry(entry)

@@ -1,9 +1,11 @@
 <h1 class="welcome-banner">Welcome to MedJournal!</h1>
-<img src="http://www.clarkdanger.com/wp-content/uploads/2015/01/journal.jpg" height="300" width="250">
-<p><class="banner">Are you a doctor?</h1>
-<%= link_to 'Login', '/dlogin' %>
-<%= link_to 'Sign up', new_doctor_path %>
-<p><class="banner">Are you a patient?</h1>
-<%= link_to 'Login', '/plogin' %>
-<%= link_to 'Sign up', new_patient_path %>
+<%= image_tag("http://www.clarkdanger.com/wp-content/uploads/2015/01/journal.jpg", :class => "img_preview", :alt => "rss feed") %>
 
+<% unless doctor_logged_in? || patient_logged_in? %>
+	<p><class="banner">Are you a doctor?</h1>
+	<%= link_to 'Login', '/dlogin' %>
+	<%= link_to 'Sign up', new_doctor_path %>
+	<p><class="banner">Are you a patient?</h1>
+	<%= link_to 'Login', '/plogin' %>
+	<%= link_to 'Sign up', new_patient_path %>
+<% end %>

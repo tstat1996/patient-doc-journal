@@ -7,21 +7,22 @@ Rails.application.routes.draw do
     end
   end
 
-
   root 'welcome#index'
   get '/dlogin' => 'doctor_sessions#new'
   post '/dlogin' => 'doctor_sessions#create'
   get '/dlogout' => 'doctor_sessions#destroy'
+  delete '/dlogout' => 'doctor_sessions#destroy'
   get '/plogin' => 'patient_sessions#new'
   post '/plogin' => 'patient_sessions#create'
   get '/plogout' => 'patient_sessions#destroy'
+  delete '/plogout' => 'patient_sessions#destroy'
   get '/patients/:id/adddoc' => 'patients#adddoc'
   get '/patients/:id/adddoctor' => 'patients#adddoctor'
   get '/add_entry' => 'journals#new'
   get '/deletec' => 'comments#destroy'
-  get 'doctor/patients' => 'doctors#patients'
-
-
+  get '/doctors/:id/patients' => 'doctors#patients'
+  get '/patients/:id/doctors' => 'patients#doctors'
+  patch '/patients/:id/adddoctor' => 'patients#adddoctor'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

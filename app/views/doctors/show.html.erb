@@ -1,26 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
+
+<strong>Name:</strong>
   <%= @doctor.name %>
-</p>
-
-<p>
-  <strong>Email:</strong>
+<%= simple_format "\n" %>
+<strong>Email:</strong>
   <%= @doctor.email %>
-</p>
-
-<p>
-  <strong>Password hash:</strong>
-  <%= @doctor.password_hash %>
-</p>
-
-<p>
-  <strong>Patients:</strong>
+<%= simple_format "\n" %>
+<strong>Code:</strong>
+  <%= @doctor.code %>
+  <%= "(Give this to patients so that they may link their journal to you)" %>
+<%= simple_format "\n" %>
+<strong>Patients:</strong>
+  <%= "No patients yet" if @doctor.patients.empty? %>
   <% @doctor.patients.each do |patient| %>
-  	<%= link_to "#{patient.name}", patient_path(patient) %>
-  <% end %>
-</p>
+    <%= link_to "#{patient.name}", patient_path(patient) %>
+<% end %>
+<%= simple_format "\n" %>
 
-<%= link_to 'Edit', edit_doctor_path(@doctor) %> |
-<%= link_to 'Back', doctors_path %>
+
+<%= link_to 'Edit', edit_doctor_path(@doctor) %> 
+<!--%= link_to 'Back', doctors_path %!-->
