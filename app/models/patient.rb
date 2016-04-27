@@ -1,14 +1,14 @@
-# Patient model
 require 'bcrypt'
 
 class Patient < ActiveRecord::Base
   include BCrypt
   validates :name, presence: true
-  validates :name, uniqueness: true
   validates :name, length: { minimum: 2 }
   validates :email, presence: true
+  validates :email, uniqueness: true
   validates :password_hash, presence: true
   validate :name_capital
+  validate :proper_email
   has_many :patients_doctors, dependent: :destroy
   has_many :doctors, through: :patients_doctors
   has_many :journals
@@ -41,5 +41,23 @@ class Patient < ActiveRecord::Base
 
   def add_entry(entry)
     journals << entry
+  end
+
+  def proper_email
+    at_sign = email.scan(/[\@]/)
+    index_at_sign = email =~ /[\@]/
+    text_at_end = email.scan(/\@\w+\.\w+/)
+    errors.add(:email, 'Missing @ sign') if at_sign.empty?
+    errors.add(:email, 'Email needs text before @') if index_at_sign == 0
+    errors.add(:email, 'Email needs text after @') if index_at_sign == email.length - 1
+    errors.add(:email, 'Email needs text surrounding the . after @') if text_at_end.eql?([])
+  end
+
+  def number_comments
+    counter = 0
+    journals.each do |journal|
+      counter += journal.comments.size
+    end
+    counter
   end
 end

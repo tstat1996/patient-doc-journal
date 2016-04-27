@@ -1,4 +1,3 @@
-# Comment Model
 class Comment < ActiveRecord::Base
   belongs_to :journal
   belongs_to :patient

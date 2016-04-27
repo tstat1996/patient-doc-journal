@@ -10,5 +10,5 @@
   <%= @comment.journal %>
 </p>
 
-<!--%= link_to 'Edit', edit_patient_journal_comment_path(@comment) %!--> |
-<!--%= link_to 'Back', comments_path %!-->
+<%= link_to 'Edit', edit_patient_journal_comment_path([@patient, @journal, @comment]) %> |
+<%= link_to 'Back', patient_journal_comment_path %>

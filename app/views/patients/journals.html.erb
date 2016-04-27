@@ -1,11 +1,10 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Journals</h1>
+<h1>Listing <%= "#{@patient.name}" %>'s Journals</h1>
 
 <table>
   <thead>
     <tr>
       <th>Name</th>
+      <th>Number of comments</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -13,7 +12,8 @@
   <tbody>
     <% @journals.each do |journal| %>
       <tr>
-        <td><%= link_to "#{journal.name}", patient_journal_path(journal.patient, journal) %></td>
+        <td><%= link_to "#{journal.name}", patient_journal_path(journal.patient, journal), {:style=>'color:darkcyan;', :class => "css_class"} %></td>
+        <td><%= journal.comments.size %></td>
         <% if patient_logged_in? %>
           <td><%= link_to 'Edit', edit_patient_journal_path(journal.patient, journal) %></td>
           <td><%= link_to 'Delete', "/patients/#{journal.patient.id}/journals/#{journal.id}", method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -25,5 +25,5 @@
 
 <br>
 <% if patient_logged_in? %>
-  <%= link_to 'Add a new entry', new_patient_journal_path %>
+  <%= link_to 'Add a new entry', new_patient_journal_path(@patient) %>
 <% end %>

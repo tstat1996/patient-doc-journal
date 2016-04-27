@@ -4,39 +4,34 @@
 <% end %>
 <%= simple_format "\n" %>
 
-  <strong>Name:</strong>
+<strong>Name:</strong>
   <%= @patient.name %>
 <%= simple_format "\n" %>
 
-  <strong>Email:</strong>
+<strong>Email:</strong>
   <%= @patient.email %>
 <%= simple_format "\n" %>
 
-  <strong>Doctors:</strong>
+<strong>Doctors:</strong>
   <% @patient.doctors.each do |doc| %>
     <%= doc.name %>
-    <% end %>
-<%= simple_format "\n" %>
-
-<strong>Entries:</strong>
-  <% @patient.journals.each do |entry| %>
-    <%= link_to "#{entry.name}", patient_journal_path(@patient.id, entry.id) %>
-    <%= entry.body %>
-    <%= link_to 'delete', patient_journal_path(@patient.id, entry.id), method: :delete %><br>
   <% end %>
 <%= simple_format "\n" %>
 
-    <% if current_patient == @patient %>
-      <%= link_to 'Add doctor', "/patients/#{@patient.id}/adddoc" %><br>
+<strong>Number of journal entries:</strong>
+  <%= @patient.journals.size %>
+  <% if doctor_logged_in? && @patient.doctors.include?(current_doctor) %>
+    <%= link_to "View #{@patient.name}'s Journal", "/patientsj/#{@patient.id}" %>
+  <% end %>
+<%= simple_format "\n" %>
 
-      <%= link_to 'Add Entry', new_patient_journal_path(@patient.id) %><br>
-    <% end %>
+<% if current_patient == @patient %>
+  <%= link_to 'Add doctor', "/patients/#{@patient.id}/adddoc" %>
+  <%= link_to 'Add Entry', new_patient_journal_path(@patient.id) %><br>
+<% end %>
 
-    <!--%= link_to 'Doctors', '/doctors' %!-->
-  </p><br>
+</p><br>
 
 <%= link_to 'Edit', edit_patient_path(@patient) %> |
 <%= link_to 'Back', patients_path if !doctor_logged_in? %>
 <%= link_to 'Back', doctors_path if doctor_logged_in? %>
-
-

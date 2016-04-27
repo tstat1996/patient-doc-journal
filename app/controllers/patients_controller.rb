@@ -1,6 +1,5 @@
-# Patient Controller
 class PatientsController < ApplicationController
-  before_action :set_patient, only: [:show, :edit, :update, :destroy, :adddoc, :doctors, :adddoctor]
+  before_action :set_patient, only: [:show, :edit, :update, :destroy, :adddoc, :doctors, :adddoctor, :journals]
 
   # GET /patients
   # GET /patients.json
@@ -9,8 +8,11 @@ class PatientsController < ApplicationController
   end
 
   def doctors
-    flash.now[:alert] = 'Yes'
-    @doctors = @patient.doctors.all
+    @doctors = @patient.doctors
+  end
+
+  def journals
+    @journals = @patient.journals
   end
 
   # GET /patients/1

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get '/doctors/:id/patients' => 'doctors#patients'
   get '/patients/:id/doctors' => 'patients#doctors'
   patch '/patients/:id/adddoctor' => 'patients#adddoctor'
+  get '/patientsj/:id' => 'patients#journals'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

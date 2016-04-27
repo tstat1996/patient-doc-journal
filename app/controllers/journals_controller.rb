@@ -1,6 +1,6 @@
-# Controller for journals
 class JournalsController < ApplicationController
   before_action :set_journal, only: [:show, :edit, :update, :destroy]
+  before_action :set_patient
 
   # GET /journals
   # GET /journals.json
@@ -16,18 +16,17 @@ class JournalsController < ApplicationController
   # GET /journals/new
   def new
     @journal = Journal.new
-    @patient = Patient.find(params[:patient_id])
   end
 
   # GET /journals/1/edit
   def edit
+    @patient = @journal.patient
   end
 
   # POST /journals
   # POST /journals.json
   def create
     @journal = Journal.new(journal_params)
-    @patient = Patient.find(params[:patient_id])
     respond_to do |format|
       if @journal.save
         @patient.add_entry(@journal)
@@ -45,7 +44,7 @@ class JournalsController < ApplicationController
   def update
     respond_to do |format|
       if @journal.update(journal_params)
-        format.html { redirect_to @journal, notice: 'Journal updated.' }
+        format.html { redirect_to patient_journal_path, notice: 'Journal updated.' }
         format.json { render :show, status: :ok, location: @journal }
       else
         format.html { render :edit }
@@ -57,10 +56,9 @@ class JournalsController < ApplicationController
   # DELETE /journals/1
   # DELETE /journals/1.json
   def destroy
-    @patient = Patient.find(params[:patient_id])
     @journal.destroy
     respond_to do |format|
-      format.html { redirect_to "/patients/#{@patient.id}/journals", notice: 'Journal destroyed.' }
+      format.html { redirect_to "/patientsj/#{@patient.id}", notice: 'Journal destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +68,10 @@ class JournalsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_journal
     @journal = Journal.find(params[:id])
+  end
+
+  def set_patient
+    @patient = Patient.find(params[:patient_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -5,6 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Number of entries</th>
+      <th>Number of comments</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,9 +13,9 @@
   <tbody>
     <% @patients.each do |patient| %>
       <tr>
-        <td><%= link_to "#{patient.name}", patient %></td>
+        <td><%= link_to "#{patient.name}", patient, {:style=>'color:red;', :class => "css_class"} %></td>
         <td><%= patient.journals.size %></td>
-
+        <td><%= patient.number_comments %></td>
       </tr>
     <% end %>
   </tbody>

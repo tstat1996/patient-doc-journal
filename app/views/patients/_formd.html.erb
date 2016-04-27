@@ -1,15 +1,11 @@
 <%= form_for(@patient, :url => "/patients/#{@patient.id}/adddoctor", :method => "patch") do |f| %>
-  
-
-  
   <%=f.fields_for :doctor do |doc| %>
     <%= doc.label :doctor_code %><br>
     <%= doc.text_field :code %>
-        <% end %>
-
+  <% end %>
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Add doctor" %>
   </div>
 <% end %>

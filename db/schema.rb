@@ -60,13 +60,4 @@ ActiveRecord::Schema.define(version: 20160417211439) do
   add_index "patients_doctors", ["doctor_id"], name: "index_patients_doctors_on_doctor_id"
   add_index "patients_doctors", ["patient_id"], name: "index_patients_doctors_on_patient_id"
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password_hash"
-    t.string   "is_doctor"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
 end

@@ -1,6 +1,6 @@
-<h1>Editing Journal</h1>
+<h1>Editing <%= "#{@patient.name}" %>'s Entry</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @journal %> |
-<%= link_to 'Back', journals_path %>
+<%= link_to 'Back', [@patient, @journal] %> |
+<%= link_to 'Back to journal', "/patientsj/#{@patient.id}" %>

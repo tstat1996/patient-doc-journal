@@ -8,16 +8,13 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
-    <% @doctors.each do |doctor| %>
-      <tr>
-        <td><%= doctor.name %></td>
-        <td><%= doctor.email %></td>
-
-      </tr>
-    <% end %>
+  <% @doctors.each do |doctor| %>
+    <tr>
+      <td><li id='doctors' ><%= doctor.name %></td>
+      <td><a id='doctors' ><%= doctor.email %></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
-
 <br>

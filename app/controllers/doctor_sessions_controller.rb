@@ -1,4 +1,3 @@
-# Controls sessions for doctors
 class DoctorSessionsController < ApplicationController
   def new
   end
